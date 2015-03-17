@@ -4,11 +4,11 @@ import threading
 import time
 from decimal import Decimal, getcontext
 
-from qsforex.execution.execution import Execution
-from qsforex.portfolio.portfolio import Portfolio
-from qsforex.settings import STREAM_DOMAIN, API_DOMAIN, ACCESS_TOKEN, ACCOUNT_ID
-from qsforex.strategy.strategy import TestStrategy
-from qsforex.streaming.streaming import StreamingForexPrices
+from execution.execution import Execution
+from portfolio.portfolio import Portfolio
+from settings import STREAM_DOMAIN, API_DOMAIN, ACCESS_TOKEN, ACCOUNT_ID
+from strategy.strategy import TestStrategy
+from streaming.streaming import StreamingForexPrices
 
 
 def trade(events, strategy, portfolio, execution):

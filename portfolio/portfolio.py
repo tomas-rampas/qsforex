@@ -1,8 +1,8 @@
 from copy import deepcopy
 from decimal import Decimal, getcontext, ROUND_HALF_DOWN
 
-from qsforex.event.event import OrderEvent
-from qsforex.portfolio.position import Position
+from event.event import OrderEvent
+from portfolio.position import Position
 
 
 class Portfolio(object):

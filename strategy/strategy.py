@@ -1,4 +1,4 @@
-from qsforex.event.event import SignalEvent
+from event.event import SignalEvent
 
 
 class TestStrategy(object):
