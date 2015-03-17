@@ -3,6 +3,9 @@ class Event(object):
 
 
 class TickEvent(Event):
+    '''
+    Ticket
+    '''
     def __init__(self, instrument, time, bid, ask):
         self.type = 'TICK'
         self.instrument = instrument
