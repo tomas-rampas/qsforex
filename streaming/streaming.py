@@ -1,7 +1,7 @@
 import requests
 import json
 
-from qsforex.event.event import TickEvent
+from event.event import TickEvent
 
 
 class StreamingForexPrices(object):
