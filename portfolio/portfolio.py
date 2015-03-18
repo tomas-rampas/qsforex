@@ -2,7 +2,7 @@ from copy import deepcopy
 from decimal import Decimal, getcontext, ROUND_HALF_DOWN
 
 from event.event import OrderEvent
-from portfolio.position import Position
+from position import Position
 
 
 class Portfolio(object):
