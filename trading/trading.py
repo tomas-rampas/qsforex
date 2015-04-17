@@ -4,14 +4,14 @@ import threading
 import time
 from decimal import Decimal, getcontext
 
-from qsforex.execution.execution import OANDAExecutionHandler
-from qsforex.portfolio.portfolio import Portfolio
-from qsforex import settings
-from qsforex.strategy.strategy import TestStrategy
-from qsforex.streaming.streaming import StreamingForexPrices
+from execution.execution import Execution
+from portfolio.portfolio import Portfolio
+from settings import STREAM_DOMAIN, API_DOMAIN, ACCESS_TOKEN, ACCOUNT_ID
+from strategy.strategy import TestStrategy
+from streaming.streaming import StreamingForexPrices
 
 
-def trade(events, strategy, portfolio, execution, heartbeat):
+def trade(events, strategy, portfolio, execution):
     """
     Carries out an infinite while loop that polls the 
     events queue and directs each event to either the
@@ -39,9 +39,9 @@ if __name__ == "__main__":
     # Set the number of decimal places to 2
     getcontext().prec = 2
 
-    heartbeat = 0.0  # Half a second between polling
+    heartbeat = 0.5  # Half a second between polling
     events = Queue.Queue()
-    equity = settings.EQUITY
+    equity = Decimal("99949.82")
 
     # Trade "Cable"
     instrument = "GBP_USD"
@@ -49,8 +49,8 @@ if __name__ == "__main__":
     # Create the OANDA market price streaming class
     # making sure to provide authentication commands
     prices = StreamingForexPrices(
-        settings.STREAM_DOMAIN, settings.ACCESS_TOKEN, 
-        settings.ACCOUNT_ID, instrument, events
+        STREAM_DOMAIN, ACCESS_TOKEN, ACCOUNT_ID,
+        instrument, events
     )
 
     # Create the strategy/signal generator, passing the 
@@ -64,17 +64,13 @@ if __name__ == "__main__":
 
     # Create the execution handler making sure to
     # provide authentication commands
-    execution = OANDAExecutionHandler(
-        settings.API_DOMAIN, 
-        settings.ACCESS_TOKEN, 
-        settings.ACCOUNT_ID
-    )
+    execution = Execution(API_DOMAIN, ACCESS_TOKEN, ACCOUNT_ID)
     
     # Create two separate threads: One for the trading loop
     # and another for the market price streaming class
     trade_thread = threading.Thread(
         target=trade, args=(
-            events, strategy, portfolio, execution, heartbeat
+            events, strategy, portfolio, execution
         )
     )
     price_thread = threading.Thread(target=prices.stream_to_queue, args=[])
